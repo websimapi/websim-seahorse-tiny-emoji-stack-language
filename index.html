@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Seahorse — tiny emoji stack language</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script type="importmap">
+  {
+    "imports": {
+      "lit/": "https://cdn.jsdelivr.net/npm/lit@2.7.5/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <main>
+    <h1>Seahorse (🧜‍♂️) — tiny emoji stack language</h1>
+
+    <section class="editor">
+      <label>Program (use only the seahorse emoji and whitespace):</label>
+      <textarea id="program" placeholder="Paste sequences of the seahorse emoji here...">🧜‍♂️ 🧜‍♂️ 🧜‍♂️ 🧜‍♂️ 🧜‍♂️ 🧜‍♂️ 🧜‍♂️ 🧜‍♂️ 🧜‍♂️ 🧜‍♂️
+🧜‍♂️ 🧜‍♂️ 🧜‍♂️ 🧜‍♂️ 🧜‍♂️ 🧜‍♂️ 🧜‍♂️ 🧜‍♂️ 🧜‍♂️ 🧜‍♂️ 🧜‍♂️</textarea>
+
+      <div class="controls">
+        <button id="run">Run</button>
+        <button id="step">Step</button>
+        <button id="reset">Reset</button>
+        <label>Input: <input id="input" placeholder="optional number" /></label>
+      </div>
+    </section>
+
+    <section class="io">
+      <div>
+        <h2>Output</h2>
+        <pre id="output"></pre>
+      </div>
+      <div>
+        <h2>Stack (top → bottom)</h2>
+        <pre id="stack"></pre>
+      </div>
+      <div>
+        <h2>Trace</h2>
+        <pre id="trace"></pre>
+      </div>
+    </section>
+
+    <section class="help">
+      <h3>Language summary</h3>
+      <ul>
+        <li>Program is a sequence of runs of the seahorse emoji (🧜‍♂️). Each contiguous run length (count) is an opcode or value.</li>
+        <li>Counts 1–9 push that integer to the stack.</li>
+        <li>10 = ADD (pop a, b → push b + a). 11 = SUB (b - a). 12 = MUL. 13 = DIV (integer, handle div by 0). 14 = PRINT (pop and append to output). 15 = DUP (duplicate top). 16 = POP. 17 = READ (push number from Input field; 0 if empty or invalid). 18 = JMP (pop target index and set instruction pointer). 19 = JZ (pop value and target; if value==0 jump to target). 20 = HALT.</li>
+        <li>Any other counts are ignored with a trace warning.</li>
+      </ul>
+      <p>Example (push 5 then push 6 then add then print): <br/>🧜‍♂️🧜‍♂️🧜‍♂️🧜‍♂️🧜‍♂️ 🧜‍♂️🧜‍♂️🧜‍♂️🧜‍♂️🧜‍♂️🧜‍♂️ 10 14 — represented by sequences of seahorses where the lengths correspond to numbers (see sample program).</p>
+    </section>
+  </main>
+
+  <script type="module" src="runner.js"></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"4c6229722a6346bc8eb5cb0e5eae5d41","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>
+
